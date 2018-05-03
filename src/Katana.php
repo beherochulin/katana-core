@@ -1,6 +1,6 @@
 <?php
 
-namespace Katana;
+namespace BeeSoft;
 
 use Symfony\Component\Console\Application as SymfonyConsole;
 use Illuminate\View\Compilers\BladeCompiler;
@@ -12,14 +12,12 @@ use Illuminate\Events\Dispatcher;
 use Katana\Commands\BuildCommand;
 use Illuminate\View\Factory;
 
-class Katana
-{
+class Katana {
     private $application;
     private $viewFactory;
     private $filesystem;
 
-    public function __construct(SymfonyConsole $application)
-    {
+    public function __construct(SymfonyConsole $application) {
         $this->registerConstants();
 
         $this->application = $application;
@@ -28,8 +26,7 @@ class Katana
         $this->viewFactory = $this->createViewFactory();
     }
 
-    public function handle()
-    {
+    public function handle() {
         $this->registerCommands();
 
         $this->application->run();
@@ -41,8 +38,7 @@ class Katana
         ]);
     }
 
-    private function createViewFactory()
-    {
+    private function createViewFactory() {
         $resolver = new EngineResolver();
 
         $bladeCompiler = $this->createBladeCompiler();
@@ -68,11 +64,9 @@ class Katana
             $dispatcher
         );
     }
-    private function createBladeCompiler()
-    {
-        if (! $this->filesystem->isDirectory(KATANA_CACHE_DIR)) {
-            $this->filesystem->makeDirectory(KATANA_CACHE_DIR);
-        }
+    private function createBladeCompiler() {
+        if ( ! $this->filesystem->isDirectory(KATANA_CACHE_DIR) ) $this->filesystem->makeDirectory(KATANA_CACHE_DIR);
+
 
         $blade = new Blade(
             new BladeCompiler($this->filesystem, KATANA_CACHE_DIR)
@@ -80,8 +74,7 @@ class Katana
 
         return $blade->getCompiler();
     }
-    private function registerConstants()
-    {
+    private function registerConstants() {
         define('KATANA_CACHE_DIR', getcwd().'/_cache');
         define('KATANA_CONTENT_DIR', getcwd().'/content');
         define('KATANA_PUBLIC_DIR', getcwd().'/public');

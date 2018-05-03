@@ -1,39 +1,32 @@
 <?php
-
-namespace Katana;
+namespace BeeSoft;
 
 use Illuminate\View\Compilers\BladeCompiler;
 use Illuminate\View\Factory;
 
-class Blade
-{
+class Blade {
     private $bladeCompiler;
 
-    public function __construct(BladeCompiler $bladeCompiler)
-    {
+    public function __construct(BladeCompiler $bladeCompiler) {
         $this->bladeCompiler = $bladeCompiler;
 
         $this->registerMarkdownDirective();
-
         $this->registerURLDirective();
     }
 
-    public function getCompiler()
-    {
+    public function getCompiler() {
         return $this->bladeCompiler;
     }
-    private function registerMarkdownDirective()
-    {
+    private function registerMarkdownDirective() {
         $this->bladeCompiler->directive('markdown', function () {
-            return "<?php echo \\Katana\\Markdown::parse(<<<'EOT'";
+            return "<?php echo \\BeeSoft\\Markdown::parse(<<<'EOT'";
         });
 
         $this->bladeCompiler->directive('endmarkdown', function () {
             return "\nEOT\n); ?>";
         });
     }
-    private function registerURLDirective()
-    {
+    private function registerURLDirective() {
         $this->bladeCompiler->directive('url', function ($expression) {
             $expression = substr($expression, 1, - 1);
 

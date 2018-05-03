@@ -1,38 +1,33 @@
 <?php
-
-namespace Katana;
+namespace BeeSoft;
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\View\Factory;
 
-class BlogPaginationBuilder
-{
+class BlogPaginationBuilder {
     private $filesystem;
     private $viewFactory;
     private $viewsData;
     private $pagesData;
 
-    public function __construct(Filesystem $filesystem, Factory $viewFactory, array $viewsData)
-    {
+    public function __construct(Filesystem $filesystem, Factory $viewFactory, array $viewsData) {
         $this->filesystem = $filesystem;
         $this->viewFactory = $viewFactory;
         $this->viewsData = $viewsData;
     }
-    public function build()
-    {
+    public function build() {
         $view = $this->getPostsListView();
 
         $postsPerPage = @$this->viewsData['postsPerPage'] ?: 5;
 
         $this->pagesData = array_chunk($this->viewsData['blogPosts'], $postsPerPage);
 
-        foreach ($this->pagesData as $pageIndex => $posts) {
+        foreach ( $this->pagesData as $pageIndex => $posts ) {
             $this->buildPage($pageIndex, $view, $posts);
         }
     }
-    private function getPostsListView()
-    {
-        if (! isset($this->viewsData['postsListView'])) {
+    private function getPostsListView() {
+        if ( ! isset($this->viewsData['postsListView']) ) {
             throw new \Exception('The postsListView config value is missing.');
         }
 
@@ -42,8 +37,7 @@ class BlogPaginationBuilder
 
         return $this->viewsData['postsListView'];
     }
-    private function buildPage($pageIndex, $view, $posts)
-    {
+    private function buildPage($pageIndex, $view, $posts) {
         $viewData = array_merge(
             $this->viewsData,
             [
@@ -64,9 +58,8 @@ class BlogPaginationBuilder
             $pageContent
         );
     }
-    private function getPreviousPageLink($currentPageIndex)
-    {
-        if (! isset($this->pagesData[$currentPageIndex - 1])) {
+    private function getPreviousPageLink($currentPageIndex) {
+        if ( ! isset($this->pagesData[$currentPageIndex - 1]) ) {
             return null;
         } elseif ($currentPageIndex == 1) {
             // If the current page is the second, then the first page's
@@ -76,21 +69,15 @@ class BlogPaginationBuilder
 
         return '/blog-page/'.$currentPageIndex.'/';
     }
-    private function getNextPageLink($currentPageIndex)
-    {
-        if (! isset($this->pagesData[$currentPageIndex + 1])) {
-            return null;
-        }
+    private function getNextPageLink($currentPageIndex) {
+        if ( ! isset($this->pagesData[$currentPageIndex + 1]) ) return null;
 
         return '/blog-page/'.($currentPageIndex + 2).'/';
     }
-    private function getBlogListPagePath()
-    {
+    private function getBlogListPagePath() {
         $path = str_replace('.', '/', $this->viewsData['postsListView']);
 
-        if (ends_with($path, 'index')) {
-            return rtrim($path, '/index');
-        }
+        if ( ends_with($path, 'index') ) return rtrim($path, '/index');
 
         return $path;
     }

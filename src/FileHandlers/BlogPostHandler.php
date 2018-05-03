@@ -1,21 +1,11 @@
 <?php
-
-namespace Katana\FileHandlers;
+namespace BeeSoft\FileHandlers;
 
 use Symfony\Component\Finder\SplFileInfo;
-use Katana\Markdown;
+use BeeSoft\Markdown;
 
-class BlogPostHandler extends BaseHandler
-{
-    /**
-     * Get the blog post data.
-     *
-     * @param SplFileInfo $file
-     *
-     * @return \stdClass
-     */
-    public function getPostData(SplFileInfo $file)
-    {
+class BlogPostHandler extends BaseHandler {
+    public function getPostData(SplFileInfo $file) {
         $this->file = $file;
 
         if ($this->file->getExtension() == 'md') {
@@ -46,20 +36,13 @@ class BlogPostHandler extends BaseHandler
 
         return json_decode(json_encode($postData), false);
     }
-
-    /**
-     * Generate directory path to be used for pretty URLs.
-     *
-     * @return string
-     */
-    protected function getDirectoryPrettyName()
-    {
+    protected function getDirectoryPrettyName() {
         $pathName = $this->normalizePath($this->file->getPathname());
         
         // If the post is inside a child directory of the _blog directory then
         // we deal with it like regular site files and generate a nested
         // directories based post path with exact file name.
-        if (str_is('*/_blog/*/*', $pathName)) {
+        if ( str_is('*/_blog/*/*', $pathName) ) {
             return str_replace('/_blog', '', parent::getDirectoryPrettyName());
         }
 
@@ -69,16 +52,7 @@ class BlogPostHandler extends BaseHandler
 
         return KATANA_PUBLIC_DIR."/$fileRelativePath";
     }
-
-    /**
-     * Generate blog post slug.
-     *
-     * @param string $fileBaseName
-     *
-     * @return string
-     */
-    private function getBlogPostSlug($fileBaseName)
-    {
+    private function getBlogPostSlug($fileBaseName) {
         preg_match('/^(\d{4}-\d{2}-\d{2})-(.*)/', $fileBaseName, $matches);
 
         return $matches[2].'-'.str_replace('-', '', $matches[1]);

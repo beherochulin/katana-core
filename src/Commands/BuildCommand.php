@@ -1,5 +1,5 @@
 <?php
-namespace Katana\Commands;
+namespace BeeSoft\Commands;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -7,7 +7,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\View\Factory;
-use Katana\SiteBuilder;
+use BeeSoft\SiteBuilder;
 
 class BuildCommand extends Command {
     private $filesystem;

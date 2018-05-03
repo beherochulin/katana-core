@@ -1,32 +1,27 @@
 <?php
-
-namespace Katana;
+namespace BeeSoft;
 
 use Mni\FrontYAML\Parser;
 
-class Markdown
-{
-    static function parse($text)
-    {
+class Markdown {
+    static function parse($text) {
         $parser = new \Parsedown();
 
         $text = static::cleanLeadingSpace($text);
 
         return $parser->text($text);
     }
-    public static function parseWithYAML($text)
-    {
+    public static function parseWithYAML($text) {
         $parser = new Parser();
 
         $parsed = $parser->parse($text);
 
         return [$parsed->getContent(), $parsed->getYAML()];
     }
-    private static function cleanLeadingSpace($text)
-    {
+    private static function cleanLeadingSpace($text) {
         $i = 0;
 
-        while (! $firstLine = explode("\n", $text)[$i]) {
+        while ( ! $firstLine = explode("\n", $text)[$i] ) {
             $i ++;
         }
 

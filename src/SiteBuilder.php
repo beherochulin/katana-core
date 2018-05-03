@@ -1,10 +1,10 @@
 <?php
-namespace Katana;
+namespace BeeSoft;
 
 use Symfony\Component\Finder\SplFileInfo;
-use Katana\FileHandlers\BlogPostHandler;
+use BeeSoft\FileHandlers\BlogPostHandler;
 use Illuminate\Filesystem\Filesystem;
-use Katana\FileHandlers\BaseHandler;
+use BeeSoft\FileHandlers\BaseHandler;
 use Illuminate\View\Factory;
 use Illuminate\Support\Str;
 
