@@ -1,12 +1,12 @@
 {
-  "name": "themsaid/katana-core",
-  "description": "Static site & blog generator with markdown support.",
+  "name": "beesoft/generator-html",
+  "description": "Static site",
   "keywords": ["flat-file","cms","static","site","generator","markdown","blade"],
   "license": "MIT",
   "authors": [
     {
-      "name": "Mohamed Said",
-      "email": "themohamedsaid@gmail.com"
+      "name": "behero",
+      "email": "beherochuling@163.com"
     }
   ],
   "require": {
@@ -19,7 +19,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Katana\\": "src"
+      "BeeSoft\\": "src"
     }
   }
 }
